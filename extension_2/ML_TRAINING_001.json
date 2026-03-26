@@ -1,0 +1,37 @@
+{
+  "problem_id": "ML_TRAINING_001",
+  "domain": "cluster",
+  "description": "Распределение задач обучения моделей на GPU кластере",
+  "project": {
+    "name": "Computer Vision Training Pipeline",
+    "objective": "minimize_completion_time"
+  },
+  "resources": [
+    {
+      "id": "NODE_TYPE_A",
+      "name": "NVIDIA A100 Node",
+      "capacity": 4,
+      "gpu_type": "A100",
+      "gpu_memory_gb": 80,
+      "ram_gb": 256,
+      "cpu_cores": 32
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TRAIN_RESNET",
+      "name": "ResNet50 Training Task",
+      "duration": 3600,
+      "is_preemptible": false,
+      "cpu_cores_required": 8,
+      "gpu_count_required": 2,
+      "ram_gb_required": 64,
+      "dependencies": [
+        {
+          "task_id": "DATA_PREP_01",
+          "type": "FS"
+        }
+      ]
+    }
+  ]
+}

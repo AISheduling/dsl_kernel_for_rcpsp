@@ -1,0 +1,59 @@
+{
+  "problem_id": "T01_CLASSIC_SCALED",
+  "domain": "rcpsp",
+  "description": "Строительство частного дома",
+  "project": {
+    "name": "House Construction Phase 1",
+    "objective": "minimize_makespan"
+  },
+  "extensions": {
+    "rcpsp": {
+      "locations": []
+    }
+  },
+  "resources": [
+    {
+      "id": "R_WORKER",
+      "name": "General Worker",
+      "capacity": 8,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable"
+        }
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T2_FOUNDATION",
+      "name": "Pouring Foundation",
+      "dependencies": [
+        {
+          "task_id": "T1_EXCAVATION",
+          "type": "FS",
+          "extensions": {
+            "rcpsp": {
+              "lag": 2
+            }
+          }
+        }
+      ],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "M1",
+              "duration": 7,
+              "requirements": [
+                {
+                  "resource_id": "R_WORKER",
+                  "quantity": 4
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
