@@ -1,0 +1,44 @@
+{
+  "schema_version": "0.1",
+  "problem_id": "T07_MULTICRITERIA_SCALED",
+  "domain": "rcpsp",
+  "description": "Маркетинговая кампания",
+  "project": {
+    "name": "Product Launch",
+    "objective": "multi_objective"
+  },
+  "extensions": {
+    "rcpsp": {
+      "objectives": [
+        { "type": "minimize_makespan", "weight": 0.5 },
+        { "type": "minimize_cost", "weight": 0.5 }
+      ]
+    }
+  },
+  "resources": [
+    {
+      "id": "R_CREATIVE",
+      "capacity": 5,
+      "extensions": { "rcpsp": { "type": "renewable", "cost_per_period": 500 } }
+    },
+    {
+      "id": "R_BUDGET",
+      "capacity": 50000,
+      "extensions": { "rcpsp": { "type": "non_renewable", "cost_per_unit": 1 } }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T1_CONCEPT",
+      "dependencies": [],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            { "mode_id": "FAST", "duration": 5, "requirements": [{ "resource_id": "R_CREATIVE", "quantity": 4 }] },
+            { "mode_id": "CHEAP", "duration": 10, "requirements": [{ "resource_id": "R_CREATIVE", "quantity": 2 }] }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "problem_id": "Уникальный_ID",
+  "description": "Описание сценария",
+  "locations": [ "SITE_A", "SITE_B" ], 
+  
+  "project": {
+    "name": "Название проекта",
+    "objective": [
+      {
+        "type": "minimize_makespan | minimize_cost",
+        "weight": 0.5
+      }
+    ]
+  },
+  
+  "resources": ["..."],
+  "tasks": ["..."]
+}
+
+
+{
+  "id": "R_ID",
+  "name": "Название ресурса",
+  "type": "renewable (люди/зоны) | non_renewable (бюджет/материалы)",
+  "capacity": 10, // доступное количество за период или всего
+  
+  // экономика
+  "cost_per_period": 100, // для renewable
+  "cost_per_unit": 50,    // для non_renewable
+
+  // логистика
+  "location_dependent": true, 
+  "initial_location": "SITE_A",
+  "transfer_times": {
+    "SITE_A": { "SITE_B": 48 } // матрица времени перемещения ресурса
+  }
+}
+
+{
+  "id": "T_ID",
+  "name": "Название задачи",
+  "location": "SITE_A", // где выполняется задача (опционально)
+  
+  "modes": [
+    {
+      "mode_id": "NORMAL | FAST | CHEAP",
+      "duration": 5,
+      // требования для конкретного режима
+      "requirements": [
+        {
+          "resource_id": "R_ID",
+          "quantity": 2
+        }
+      ]
+    }
+  ],
+
+  "dependencies": ["..."]
+}
+
+{
+  "task_id": "PREDECESSOR_ID", // От какой задачи зависит
+  "type": "FS (Finish-to-Start) | SS (Start-to-Start)",
+  "lag": 2 // задержка (например, ждать 2 дня пока застынет бетон)
+}

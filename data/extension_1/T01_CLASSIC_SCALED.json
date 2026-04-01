@@ -1,0 +1,179 @@
+{
+  "schema_version": "0.1",
+  "problem_id": "T01_CLASSIC_SCALED",
+  "domain": "rcpsp",
+  "description": "Строительство частного дома (увеличенный сценарий)",
+  "project": {
+    "name": "House Construction Phase 1",
+    "objective": "minimize_makespan"
+  },
+  "extensions": {
+    "rcpsp": {}
+  },
+  "resources": [
+    {
+      "id": "R_WORKER",
+      "name": "General Worker",
+      "capacity": 8,
+      "extensions": { "rcpsp": { "type": "renewable" } }
+    },
+    {
+      "id": "R_CRANE",
+      "name": "Crane",
+      "capacity": 1,
+      "extensions": { "rcpsp": { "type": "renewable" } }
+    },
+    {
+      "id": "R_CEMENT",
+      "name": "Cement (tons)",
+      "capacity": 50,
+      "extensions": { "rcpsp": { "type": "non_renewable" } }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "START",
+      "dependencies": [],
+      "extensions": { "rcpsp": { "modes": [{ "mode_id": "M0", "duration": 0, "requirements": [] }] } }
+    },
+    {
+      "id": "T1_EXCAVATION",
+      "name": "Excavation",
+      "dependencies": [{ "task_id": "START", "type": "FS" }],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "M1",
+              "duration": 5,
+              "requirements": [{ "resource_id": "R_WORKER", "quantity": 2 }]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "T2_FOUNDATION",
+      "name": "Pouring Foundation",
+      "dependencies": [{ "task_id": "T1_EXCAVATION", "type": "FS" }],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "M1",
+              "duration": 7,
+              "requirements": [
+                { "resource_id": "R_WORKER", "quantity": 4 },
+                { "resource_id": "R_CEMENT", "quantity": 20 }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "T3_WALLS_1",
+      "name": "Walls First Floor",
+      "dependencies": [
+        {
+          "task_id": "T2_FOUNDATION",
+          "type": "FS",
+          "extensions": { "rcpsp": { "lag": 2 } }
+        }
+      ],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "NORMAL",
+              "duration": 10,
+              "requirements": [
+                { "resource_id": "R_WORKER", "quantity": 5 },
+                { "resource_id": "R_CEMENT", "quantity": 15 }
+              ]
+            },
+            {
+              "mode_id": "FAST",
+              "duration": 6,
+              "requirements": [
+                { "resource_id": "R_WORKER", "quantity": 8 },
+                { "resource_id": "R_CEMENT", "quantity": 15 }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "T4_ROOF_PREP",
+      "name": "Roof Structure Prep",
+      "dependencies": [
+        {
+          "task_id": "T3_WALLS_1",
+          "type": "SS",
+          "extensions": { "rcpsp": { "lag": 5 } }
+        }
+      ],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "M1",
+              "duration": 4,
+              "requirements": [
+                { "resource_id": "R_WORKER", "quantity": 2 },
+                { "resource_id": "R_CRANE", "quantity": 1 }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "T5_ROOF_INSTALL",
+      "name": "Roof Installation",
+      "dependencies": [
+        { "task_id": "T4_ROOF_PREP", "type": "FS" },
+        { "task_id": "T3_WALLS_1", "type": "FS" }
+      ],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "M1",
+              "duration": 5,
+              "requirements": [
+                { "resource_id": "R_WORKER", "quantity": 3 },
+                { "resource_id": "R_CRANE", "quantity": 1 }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "T6_WINDOWS",
+      "name": "Windows Installation",
+      "dependencies": [{ "task_id": "T3_WALLS_1", "type": "FS" }],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "M1",
+              "duration": 6,
+              "requirements": [{ "resource_id": "R_WORKER", "quantity": 2 }]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "END",
+      "dependencies": [
+        { "task_id": "T5_ROOF_INSTALL", "type": "FS" },
+        { "task_id": "T6_WINDOWS", "type": "FS" }
+      ],
+      "extensions": { "rcpsp": { "modes": [{ "mode_id": "M0", "duration": 0, "requirements": [] }] } }
+    }
+  ]
+}

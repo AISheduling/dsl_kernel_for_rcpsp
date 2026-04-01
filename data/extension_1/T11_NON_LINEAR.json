@@ -1,0 +1,52 @@
+{
+  "schema_version": "0.1",
+  "problem_id": "T11_NON_LINEAR_PRODUCTIVITY",
+  "domain": "rcpsp",
+  "description": "Нелинейная производительность",
+  "project": {
+    "name": "Factory Assembly Line",
+    "objective": "minimize_cost"
+  },
+  "resources": [
+    {
+      "id": "R_WORKER",
+      "capacity": 10,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable",
+          "cost_per_period": 100
+        }
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T1_ASSEMBLY_BATCH_A",
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "OPTIMAL_CREW",
+              "duration": 10,
+              "requirements": [
+                { "resource_id": "R_WORKER", "quantity": 2 }
+              ]
+            },
+            {
+              "mode_id": "CROWDED_CREW",
+              "duration": 8,
+              "requirements": [
+                { "resource_id": "R_WORKER", "quantity": 3 }
+              ],
+              "extensions": {
+                "rcpsp": {
+                  "efficiency_note": "diminishing_returns"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

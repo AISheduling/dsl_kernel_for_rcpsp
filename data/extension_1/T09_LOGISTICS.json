@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.1",
+  "problem_id": "T09_LOGISTICS_TRANSFER",
+  "domain": "rcpsp",
+  "description": "Логистика между площадками",
+  "project": {
+    "name": "Dual Site Construction",
+    "objective": "minimize_makespan"
+  },
+  "extensions": {
+    "rcpsp": {
+      "locations": ["SITE_A", "SITE_B"]
+    }
+  },
+  "resources": [
+    {
+      "id": "R_EXCAVATOR_HEAVY",
+      "capacity": 1,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable",
+          "location_dependent": true,
+          "initial_location": "SITE_A",
+          "transfer_times": {
+            "SITE_A": { "SITE_B": 48, "SITE_A": 0 },
+            "SITE_B": { "SITE_A": 48, "SITE_B": 0 }
+          }
+        }
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T1_SITE_A_DIG",
+      "extensions": {
+        "rcpsp": {
+          "location": "SITE_A",
+          "modes": [
+            {
+              "mode_id": "M1",
+              "duration": 24,
+              "requirements": [{ "resource_id": "R_EXCAVATOR_HEAVY", "quantity": 1 }]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
