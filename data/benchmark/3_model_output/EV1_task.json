@@ -1,0 +1,167 @@
+{
+  "schema_version": "0.1",
+  "problem_id": "example_problem_1",
+  "domain": "rcpsp",
+  "project": {
+    "name": "Example Project 1",
+    "objective": "minimize_makespan"
+  },
+  "extensions": {
+    "rcpsp": {
+      "objectives": [
+        {
+          "type": "minimize_makespan",
+          "weight": 1.0
+        }
+      ]
+    }
+  },
+  "resources": [
+    {
+      "id": "R1",
+      "capacity": 10,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable"
+        }
+      }
+    },
+    {
+      "id": "R2",
+      "capacity": 10,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable"
+        }
+      }
+    },
+    {
+      "id": "R3",
+      "capacity": 10,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable"
+        }
+      }
+    },
+    {
+      "id": "R4",
+      "capacity": 10,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable"
+        }
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "1",
+      "dependencies": [],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "1",
+              "duration": 0,
+              "requirements": [
+                {
+                  "resource_id": "R1",
+                  "quantity": 1
+                },
+                {
+                  "resource_id": "R2",
+                  "quantity": 1
+                },
+                {
+                  "resource_id": "R3",
+                  "quantity": 1
+                },
+                {
+                  "resource_id": "R4",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2",
+      "dependencies": [
+        {
+          "task_id": "1",
+          "type": "FS",
+          "extensions": {}
+        }
+      ],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "1",
+              "duration": 10,
+              "requirements": [
+                {
+                  "resource_id": "R1",
+                  "quantity": 10
+                },
+                {
+                  "resource_id": "R2",
+                  "quantity": 10
+                },
+                {
+                  "resource_id": "R3",
+                  "quantity": 10
+                },
+                {
+                  "resource_id": "R4",
+                  "quantity": 10
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3",
+      "dependencies": [
+        {
+          "task_id": "1",
+          "type": "FS",
+          "extensions": {}
+        }
+      ],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "1",
+              "duration": 0,
+              "requirements": [
+                {
+                  "resource_id": "R1",
+                  "quantity": 1
+                },
+                {
+                  "resource_id": "R2",
+                  "quantity": 1
+                },
+                {
+                  "resource_id": "R3",
+                  "quantity": 1
+                },
+                {
+                  "resource_id": "R4",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

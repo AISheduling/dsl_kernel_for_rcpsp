@@ -1,0 +1,163 @@
+{
+  "schema_version": "0.1",
+  "problem_id": "example_problem",
+  "domain": "rcpsp",
+  "project": {
+    "name": "example_project",
+    "objective": "minimize_makespan"
+  },
+  "resources": [
+    {
+      "id": "R1",
+      "capacity": 46,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable"
+        }
+      }
+    },
+    {
+      "id": "R2",
+      "capacity": 37,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable"
+        }
+      }
+    },
+    {
+      "id": "N1",
+      "capacity": 230,
+      "extensions": {
+        "rcpsp": {
+          "type": "non_renewable"
+        }
+      }
+    },
+    {
+      "id": "N2",
+      "capacity": 239,
+      "extensions": {
+        "rcpsp": {
+          "type": "non_renewable"
+        }
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "1",
+      "dependencies": [
+        {
+          "task_id": "2",
+          "type": "FS",
+          "extensions": {}
+        }
+      ],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "1",
+              "duration": 0,
+              "requirements": [
+                {
+                  "resource_id": "R1",
+                  "quantity": 1
+                },
+                {
+                  "resource_id": "R2",
+                  "quantity": 1
+                },
+                {
+                  "resource_id": "N1",
+                  "quantity": 1
+                },
+                {
+                  "resource_id": "N2",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2",
+      "dependencies": [],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "1",
+              "duration": 4,
+              "requirements": [
+                {
+                  "resource_id": "R1",
+                  "quantity": 8
+                },
+                {
+                  "resource_id": "R2",
+                  "quantity": 1
+                },
+                {
+                  "resource_id": "N1",
+                  "quantity": 7
+                },
+                {
+                  "resource_id": "N2",
+                  "quantity": 5
+                }
+              ]
+            },
+            {
+              "mode_id": "2",
+              "duration": 7,
+              "requirements": [
+                {
+                  "resource_id": "R1",
+                  "quantity": 1
+                },
+                {
+                  "resource_id": "R2",
+                  "quantity": 3
+                },
+                {
+                  "resource_id": "N1",
+                  "quantity": 6
+                },
+                {
+                  "resource_id": "N2",
+                  "quantity": 4
+                }
+              ]
+            },
+            {
+              "mode_id": "3",
+              "duration": 9,
+              "requirements": [
+                {
+                  "resource_id": "R1",
+                  "quantity": 5
+                },
+                {
+                  "resource_id": "R2",
+                  "quantity": 1
+                },
+                {
+                  "resource_id": "N1",
+                  "quantity": 4
+                },
+                {
+                  "resource_id": "N2",
+                  "quantity": 3
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

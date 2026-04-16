@@ -1,0 +1,98 @@
+{
+  "schema_version": "0.1",
+  "problem_id": "EV1_TASK",
+  "domain": "rcpsp",
+  "description": "EV1 instance in Patterson/RCP format (single-mode RCPSP, 1 real job + supersource/sink)",
+  "project": {
+    "name": "EV1_task",
+    "objective": "minimize_makespan"
+  },
+  "extensions": {
+    "rcpsp": {}
+  },
+  "resources": [
+    {
+      "id": "R1",
+      "name": "Resource 1",
+      "capacity": 10,
+      "extensions": { "rcpsp": { "type": "renewable" } }
+    },
+    {
+      "id": "R2",
+      "name": "Resource 2",
+      "capacity": 10,
+      "extensions": { "rcpsp": { "type": "renewable" } }
+    },
+    {
+      "id": "R3",
+      "name": "Resource 3",
+      "capacity": 10,
+      "extensions": { "rcpsp": { "type": "renewable" } }
+    },
+    {
+      "id": "R4",
+      "name": "Resource 4",
+      "capacity": 10,
+      "extensions": { "rcpsp": { "type": "renewable" } }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "J1",
+      "name": "Supersource",
+      "dependencies": [],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "M1",
+              "duration": 0,
+              "requirements": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "J2",
+      "name": "Job 2",
+      "dependencies": [
+        { "task_id": "J1", "type": "FS" }
+      ],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "M1",
+              "duration": 10,
+              "requirements": [
+                { "resource_id": "R1", "quantity": 10 },
+                { "resource_id": "R2", "quantity": 10 },
+                { "resource_id": "R3", "quantity": 10 },
+                { "resource_id": "R4", "quantity": 10 }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "J3",
+      "name": "Supersink",
+      "dependencies": [
+        { "task_id": "J2", "type": "FS" }
+      ],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "M1",
+              "duration": 0,
+              "requirements": []
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

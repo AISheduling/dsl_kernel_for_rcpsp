@@ -1,0 +1,111 @@
+{
+  "schema_version": "0.1",
+  "problem_id": "j30_17.bas",
+  "domain": "rcpsp",
+  "project": {
+    "name": "j30_17",
+    "objective": "minimize_makespan"
+  },
+  "resources": [
+    {
+      "id": "R1",
+      "capacity": 12,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable"
+        }
+      }
+    },
+    {
+      "id": "R2",
+      "capacity": 13,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable"
+        }
+      }
+    },
+    {
+      "id": "R3",
+      "capacity": 4,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable"
+        }
+      }
+    },
+    {
+      "id": "R4",
+      "capacity": 12,
+      "extensions": {
+        "rcpsp": {
+          "type": "renewable"
+        }
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "1",
+      "dependencies": [],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "1",
+              "duration": 0,
+              "requirements": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2",
+      "dependencies": [
+        {
+          "task_id": "1",
+          "type": "FS",
+          "extensions": {}
+        }
+      ],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "1",
+              "duration": 8,
+              "requirements": [
+                {
+                  "resource_id": "R1",
+                  "quantity": 4
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3",
+      "dependencies": [
+        {
+          "task_id": "2",
+          "type": "FS",
+          "extensions": {}
+        }
+      ],
+      "extensions": {
+        "rcpsp": {
+          "modes": [
+            {
+              "mode_id": "1",
+              "duration": 0,
+              "requirements": []
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
