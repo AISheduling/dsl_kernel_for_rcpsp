@@ -76,21 +76,21 @@ class ProjectExt(BaseModel):
 
 # Основные классы графа
 class Dependency(BaseModel):
-    task_id: str = Field(..., description="ID предшественника")
-    type: Literal["FS", "SS"] = Field(..., description="Тип связи: Finish-to-Start или Start-to-Start")
+    task_id: str = Field(..., description="ID задачи-предшественника (predecessor)")
+    type: Literal["FS", "SS"] = Field(...)
     extensions: Optional[DependencyExt] = None
 
 class Task(BaseModel):
     id: str = Field(..., description="Уникальный ID задачи")
     name: Optional[str] = None
     dependencies: List[Dependency] = Field(default_factory=list)
-    extensions: Optional[TaskExt] = Field(..., description="Доменная специфика задачи")
+    extensions: Optional[TaskExt] = Field(None, description="Доменная специфика задачи")
 
 class Resource(BaseModel):
     id: str = Field(..., description="Уникальный ID ресурса")
     name: Optional[str] = None
-    capacity: int = Field(..., description="Базовое количество ресурса")
-    extensions: Optional[ResourceExt] = Field(..., description="Доменная специфика ресурса")
+    capacity: int = Field(...)
+    extensions: Optional[ResourceExt] = Field(None, description="Доменная специфика ресурса")
 
 class ProjectMeta(BaseModel):
     name: str = Field(..., description="Название проекта")
