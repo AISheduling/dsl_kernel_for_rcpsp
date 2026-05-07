@@ -264,14 +264,12 @@ def debug_compare(gt_data: dict, pred_data: dict):
     Печатает подробную диагностику расхождений между GT и предсказанием.
     Вызывается один раз для первого файла/прогона.
     """
-    print("\n" + "="*60)
     print("DEBUG: Сравнение структур GT vs Prediction")
-    print("="*60)
 
     gt_tasks = gt_data.get("tasks", [])
     pred_tasks = pred_data.get("tasks", [])
-    print(f"  Кол-во задач в GT:   {len(gt_tasks)}")
-    print(f"  Кол-во задач в Pred: {len(pred_tasks)}")
+    print(f"Кол-во задач в GT:   {len(gt_tasks)}")
+    print(f"Кол-во задач в Pred: {len(pred_tasks)}")
 
     # --- task_id типы ---
     if gt_tasks:
@@ -491,14 +489,14 @@ def evaluate_run(gt_data: dict, pred_data: dict) -> dict:
     tp_deps, fp_deps, fn_deps = 0, 0, 0
 
     for gt_task, pred_task in pairs:
-        # --- Duration accuracy ---
+        # Duration accuracy
         gt_dur = get_duration(gt_task)
         pred_dur = get_duration(pred_task) if pred_task else None
 
         if gt_dur is not None and gt_dur == pred_dur:
             correct_durations += 1
 
-        # --- Dependencies F1 ---
+        # Dependencies F1
         gt_deps = get_dep_ids(gt_task)
 
         raw_pred_deps = get_dep_ids(pred_task) if pred_task else set()
@@ -572,7 +570,7 @@ def run_experiments(source_dir: str, gt_dir: str, output_base: str, n_runs: int 
                     with open(run_file_path, "w", encoding="utf-8") as f:
                         json.dump(pred_dict, f, indent=2, ensure_ascii=False)
                 
-                # --- DEBUG: один раз показываем структуры GT и Pred ---
+                # DEBUG: один раз показываем структуры GT и Pred
                 if gt_data and not debug_done:
                     debug_compare(gt_data, pred_dict)
                     debug_done = True
@@ -598,10 +596,10 @@ def run_experiments(source_dir: str, gt_dir: str, output_base: str, n_runs: int 
             print(f"Accuracy (Длительность): {acc_mean:.3f} ± {acc_std:.3f}")
             print(f"F1-Score (Связи): {f1_mean:.3f} ± {f1_std:.3f}\n")
             
-            # Сохраняем сводку в файл
+            # Сохраняем сводку
             with open(task_out_dir / "metrics_summary.txt", "w", encoding="utf-8") as f:
                 f.write(f"Duration Accuracy: {acc_mean:.3f} ± {acc_std:.3f}\n")
-                f.write(f"Dependencies F1:   {f1_mean:.3f} ± {f1_std:.3f}\n")
+                f.write(f"Dependencies F1: {f1_mean:.3f} ± {f1_std:.3f}\n")
 
 if __name__ == "__main__":
     SOURCE_DIR = "data/benchmark/1_raw_data"

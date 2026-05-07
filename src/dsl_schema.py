@@ -96,7 +96,7 @@ class ProjectMeta(BaseModel):
     name: str = Field(..., description="Название проекта")
     objective: str = Field(..., description="Главная цель или 'multi_objective'")
 
-# Корневая модель (Root Model)ы
+# Корневая модель (Root Model)
 class SchedulingProblem(BaseModel):
     schema_version: str = Field(default="0.1", description="Версия схемы DSL")
     problem_id: str = Field(..., description="Уникальный ID постановки")
