@@ -198,6 +198,10 @@ def evaluate_run(gt_data: dict, pred_data: dict) -> dict:
     # Resources F1
     gt_res_set  = {get_resource_signature(r) for r in gt_data.get("resources", [])}
     pred_res_set = {get_resource_signature(r) for r in pred_data.get("resources", [])}
+
+    print(f"  GT res:   {sorted(gt_res_set)}")
+    print(f"  Pred res: {sorted(pred_res_set)}")
+    
     tp_r = len(gt_res_set & pred_res_set)
     fp_r = len(pred_res_set - gt_res_set)
     fn_r = len(gt_res_set - pred_res_set)
