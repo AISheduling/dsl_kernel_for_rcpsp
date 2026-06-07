@@ -4,3 +4,4 @@ __pycache__/
 .env
 benchmark/
 data/
+.pytest_cache/

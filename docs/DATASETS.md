@@ -13,13 +13,7 @@ This document describes the benchmark datasets used for evaluating the parser pi
 **Reference:**
 > Van Peteghem, V. and Vanhoucke, M. (2014). An experimental investigation of metaheuristics for the multi-mode resource-constrained project scheduling problem on new dataset instances. *European Journal of Operational Research*, 235(1), 62–72. [doi:10.1016/j.ejor.2013.10.012](https://doi.org/10.1016/j.ejor.2013.10.012)
 
-**Subsets used:**
-
-| Subset | Description |
-|---|---|
-| MMLIB50 | Instances with 50 activities |
-| MMLIB100 | Instances with 100 activities |
-| MMLIB+ | Extended set with larger and more complex instances |
+**Subset used:** `MMLIB50` - instances with 50 activities
 
 **Best known solutions:** Available via the SolutionsUpdate tool provided alongside the dataset.
 
@@ -33,15 +27,7 @@ This document describes the benchmark datasets used for evaluating the parser pi
 
 **File format:** `.msrcp` (multi-skill RCP format)
 
-**Subsets used:**
-
-| Subset | Instances | Description |
-|---|---|---|
-| MSLIB1 | 6,600 | Basic set for MSRCPSP research |
-| MSLIB2 | 9,000 | Wide range of projects with diverse multi-skilled workforces |
-| MSLIB3 | 11,880 | Small and large workforces with variability in skill availability |
-| MSLIB4 | 5,000 | Hardest instances, 30 activities each |
-| MSLIB5 | Growing | Empirical dataset |
+**Subset used:** `MSLIB1` - basic set for MSRCPSP research with 6600 instances
 
 **References:**
 > Snauwaert, J., & Vanhoucke, M. (2022). Mathematical formulations for project scheduling problems with categorical and hierarchical skills. *Computers and Industrial Engineering*, 169, 108147. [doi:10.1016/j.cie.2022.108147](https://doi.org/10.1016/j.cie.2022.108147)
@@ -71,7 +57,5 @@ This document describes the benchmark datasets used for evaluating the parser pi
 | Dataset | Format | Problem type | Instances used |
 |---|---|---|---|
 | MMLIB50 | `.mm` | MMRCPSP | Subset for benchmarking |
-| MMLIB100 | `.mm` | MMRCPSP | Subset for benchmarking |
-| MMLIB+ | `.mm` | MMRCPSP | Subset for benchmarking |
 | MSLIB1–5 | `.msrcp` | MSRCPSP | Subset for benchmarking |
 | PSPLIB j30 | `.sm`, `.rcp` | RCPSP | Subset for benchmarking |
