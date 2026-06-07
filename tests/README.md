@@ -1,32 +1,34 @@
 # tests/
 
-Юнит-тесты для библиотеки. Запуск:
+Unit tests for the library.
+
+Run all tests:
 
 ```bash
 pytest tests/ -v
 ```
 
-Или отдельный файл:
+Or run individual test files:
 
 ```bash
 pytest tests/test_evaluate_parsers.py -v
 pytest tests/test_generate_gt.py -v
 ```
 
-## Покрытие
+## Test Coverage
 
-| Файл теста | Что тестируется |
-|---|---|
-| `test_evaluate_parsers.py` | `_f1`, `get_duration`, `get_dep_ids`, `get_requirements`, `get_resource_signature`, `align_tasks`, `build_id_map`, `evaluate_run` |
-| `test_generate_gt.py` | `generate_gt`: успешная генерация, пропуск неподдерживаемых форматов, обработка ошибок парсера, корректность выходного JSON, создание директорий |
+| Test File                  | Covered Functionality                                                                                                                     |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `test_evaluate_parsers.py` | `_f1`, `get_duration`, `get_dep_ids`, `get_requirements`, `get_resource_signature`, `align_tasks`, `build_id_map`, `evaluate_run`         |
+| `test_generate_gt.py`      | `generate_gt`: successful generation, skipping unsupported formats, parser error handling, output JSON validation, and directory creation |
 
-## Зависимости
+## Dependencies
 
-```
+```text
 pytest>=7.0
 ```
 
-Устанавливаются вместе с основными зависимостями проекта. Если нет:
+Installed automatically with the project's main dependencies. If needed, install manually:
 
 ```bash
 pip install pytest
