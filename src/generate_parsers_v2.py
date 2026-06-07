@@ -49,12 +49,11 @@ MODEL = "openai/gpt-5.4-nano"
 
 EARLY_STOP_DURATION = 0.85
 EARLY_STOP_DEPS_F1  = 0.80
-EARLY_STOP_RES_F1   = 0.80  # парсер должен корректно извлекать capacity ресурсов
+EARLY_STOP_RES_F1 = 0.80  # парсер должен корректно извлекать capacity ресурсов
 
 SUPPORTED_EXTENSIONS = [".sm", ".mm", ".rcp", ".msrcp"]
 
 # DSL-схема
-
 DSL_SCHEMA_DESCRIPTION = """
 The target format is a JSON object matching this Pydantic schema (SchedulingProblem):
 
@@ -184,7 +183,6 @@ Format: Multi-Skill RCP (.msrcp)
 
 
 # ARCHITECT: обогащение схемы для LLM (PARSE-подход)
-
 ARCHITECT_PROMPT = """\
 You are optimizing a JSON schema description so that an LLM can extract data from
 scheduling files more reliably. The current schema description is often misunderstood:
@@ -569,8 +567,7 @@ def scope_validate(result: dict | None, error: str | None, gt_data: dict | None 
     return errors
 
 
-# Промпты генерации (обновлённые — используют enriched_schema)
-
+# Промпты генерации
 SYSTEM_GENERATE = """\
 You are an expert Python developer. Your task is to write a Python parser function \
 that reads a scheduling problem file and converts it to a JSON structure.
@@ -653,7 +650,7 @@ def extract_code(llm_output: str) -> str:
 
 
 def generate_parser_code(ext: str, example_file: str, enriched_schema: str) -> tuple[str, dict]:
-    """Первая генерация парсера с обогащённой схемой."""
+    """Первая генерация парсера с обогащённой схемой"""
     example_content = Path(example_file).read_text(encoding="utf-8", errors="replace")
     if len(example_content) > 3000:
         example_content = example_content[:3000] + "\n... [truncated for brevity]"
@@ -671,7 +668,7 @@ def generate_parser_code(ext: str, example_file: str, enriched_schema: str) -> t
 
 
 def fix_parser_code(code: str, errors: list[str], enriched_schema: str) -> tuple[str, dict]:
-    """Регенерация с ошибками и обогащённой схемой. Не использует .format() — безопасно для любых errors."""
+    """Регенерация с ошибками и обогащённой схемой"""
     errors_str = "\n\n".join(errors[:5])
     system = (
         SYSTEM_FIX_TEMPLATE
@@ -727,7 +724,7 @@ def validate_parser(
         "requirements_f1": [],
     }
     structural_errors: list[str] = []  # ошибки структуры (SCOPE)
-    runtime_errors: list[str] = []     # ошибки выполнения
+    runtime_errors: list[str] = [] # ошибки выполнения
 
     for file in val_files:
         gt_file = gt_dir / f"{file.stem}.json"
@@ -769,7 +766,6 @@ def validate_parser(
 
 
 # Основной цикл
-
 def generate_and_validate(
     ext: str,
     example_file: str,
@@ -807,7 +803,7 @@ def generate_and_validate(
     schema_path = output_dir / ext_clean / "enriched_schema.txt"
     schema_path.parent.mkdir(parents=True, exist_ok=True)
     schema_path.write_text(enriched_schema, encoding="utf-8")
-    print(f"    Сохранена → {schema_path}")
+    print(f"    Сохранена -> {schema_path}")
 
     # Grammar Induction
     induced_grammar: str | None = None
@@ -823,7 +819,7 @@ def generate_and_validate(
             induced_grammar = grammar_text
             grammar_path = output_dir / ext_clean / "induced_grammar.lark"
             grammar_path.write_text(grammar_text, encoding="utf-8")
-            print(f"    Грамматика сохранена → {grammar_path}")
+            print(f"    Грамматика сохранена -> {grammar_path}")
         else:
             print(f"    Грамматика невалидна: {grammar_err}")
             print("    Продолжаем без Grammar Induction.")
@@ -882,7 +878,7 @@ def generate_and_validate(
             })
             continue
 
-        # Валидация (SCOPE)
+        # Валидация
         metrics, errors = validate_parser(parse_fn, val_files, gt_dir)
         last_errors = errors
 
@@ -908,7 +904,7 @@ def generate_and_validate(
             "tokens": usage,
         })
 
-        # Обновляем лучший результат (по сумме всех четырёх метрик)
+        # Обновляем лучший результат по сумме всех четырёх метрик
         score = dur_acc + dep_f1 + res_f1 + req_f1
         best_score = sum(best_metrics.get(k, 0.0) for k in
                          ("duration_accuracy", "dependencies_f1", "resources_f1", "requirements_f1"))
@@ -917,14 +913,14 @@ def generate_and_validate(
             best_code = current_code
             best_attempt = attempt
 
-        # Ранняя остановка — все три ключевые метрики должны быть выше порога
+        # Ранняя остановка - все три ключевые метрики должны быть выше порога
         if (dur_acc >= EARLY_STOP_DURATION
                 and dep_f1 >= EARLY_STOP_DEPS_F1
                 and res_f1 >= EARLY_STOP_RES_F1):
             print(f"    Достигнут порог качества на попытке {attempt}.")
             break
 
-        # Если нет рантайм-ошибок, но метрики плохие — даём явный hint
+        # Если нет рантайм-ошибок, но метрики плохие - даём явный hint
         if not errors and score < 0.5:
             last_errors = [
                 f"Parser runs without errors but metrics are poor: "
@@ -934,7 +930,7 @@ def generate_and_validate(
                 f"2) task ID format, 3) requirements extraction from REQUESTS/DURATIONS."
             ]
 
-        # Отдельный hint если res_f1=0 но остальное хорошее — частый случай
+        # Отдельный hint если res_f1=0 но остальное хорошее
         if res_f1 == 0.0 and dur_acc > 0.5 and not any("capacity" in e for e in last_errors):
             last_errors = [
                 f"CRITICAL: resources_f1=0.0 — all resources have capacity=0. "
@@ -975,7 +971,6 @@ def generate_and_validate(
 
 
 # Применение лучшего парсера
-
 def apply_best_parser(ext: str, source_dir: Path, output_dir: Path) -> None:
     ext_clean = ext.lstrip(".")
     parser_path = output_dir / ext_clean / "best_parser.py"
@@ -1008,11 +1003,10 @@ def apply_best_parser(ext: str, source_dir: Path, output_dir: Path) -> None:
             )
             ok += 1
 
-    print(f"  Готово: {ok} OK, {failed} ошибок → {results_dir}")
+    print(f"  Готово: {ok} OK, {failed} ошибок -> {results_dir}")
 
 
 # CLI
-
 def _parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Генерация парсеров через LLM (v2: PARSE + Grammar Induction).")
     p.add_argument("--source", default="data/benchmark/1_raw_data")
@@ -1071,7 +1065,6 @@ def main() -> None:
             apply_best_parser(ext, source, output)
 
     # Итоговая таблица
-    print("\n" + "="*70)
     print("ИТОГО:")
     grand_total = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
     for ext, summary in all_summaries.items():
