@@ -20,7 +20,7 @@ from pathlib import Path
 from typing import List, Optional
 
 # DSL-схема
-from dsl_schema import (
+from src.dsl_schema import (
     SchedulingProblem,
     Task,
     Resource,
@@ -38,7 +38,6 @@ from dsl_schema import (
 
 
 # Helpers
-
 def _problem_id(path: str) -> str:
     return Path(path).stem.upper()
 

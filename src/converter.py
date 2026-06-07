@@ -6,7 +6,7 @@ import instructor
 from openai import OpenAI
 from dotenv import load_dotenv
 
-from dsl_schema import SchedulingProblem
+from src.dsl_schema import SchedulingProblem
 
 load_dotenv()
 

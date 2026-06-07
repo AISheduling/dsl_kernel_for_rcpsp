@@ -22,10 +22,10 @@ import json
 import statistics
 from pathlib import Path
 
-from dsl_schema import SchedulingProblem
+from src.dsl_schema import SchedulingProblem
 
 # Импорт парсеров
-from parsers import parse_sm, parse_mm, parse_rcp, parse_msrcp
+from src.parsers import parse_sm, parse_mm, parse_rcp, parse_msrcp
 
 # Реестр парсеров по расширению
 PARSERS: dict[str, callable] = {

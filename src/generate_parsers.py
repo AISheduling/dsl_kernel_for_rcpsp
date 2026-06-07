@@ -32,7 +32,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
 
-from evaluate_parsers import evaluate_run
+from src.evaluate_parsers import evaluate_run
 
 load_dotenv()
 
@@ -698,7 +698,6 @@ def main() -> None:
             apply_best_parser(ext, source, output)
 
     # Сводная таблица
-    print("\n" + "=" * 70)
     print("ИТОГО:")
     grand_total = {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}
     for ext, summary in all_summaries.items():

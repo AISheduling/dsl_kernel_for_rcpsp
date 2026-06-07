@@ -31,7 +31,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
 
-from evaluate_parsers import evaluate_run
+from src.evaluate_parsers import evaluate_run
 
 load_dotenv()
 
