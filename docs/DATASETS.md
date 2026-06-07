@@ -57,5 +57,5 @@ This document describes the benchmark datasets used for evaluating the parser pi
 | Dataset | Format | Problem type | Instances used |
 |---|---|---|---|
 | MMLIB50 | `.mm` | MMRCPSP | Subset for benchmarking |
-| MSLIB1–5 | `.msrcp` | MSRCPSP | Subset for benchmarking |
+| MSLIB1 | `.msrcp` | MSRCPSP | Subset for benchmarking |
 | PSPLIB j30 | `.sm`, `.rcp` | RCPSP | Subset for benchmarking |
