@@ -128,11 +128,15 @@ python generate_parsers_v2.py \
 │   ├── METRICS_AND_ANNOTATION.md
 │   └── EXPERIMENTS.md
 ├── data/
-│   └── benchmark/
-│       ├── 1_raw_data/
-│       ├── 2_ground_truth/
-│       ├── 3_parser_output/
-│       └── 4_generated_parsers/
+│   ├── datasets/
+│   │   ├── base_dataset/
+│   │   ├── extension_1/
+│   │   └── extension_2/
+│   ├── benchmark/
+│   │   ├── 1_raw_data/
+│   │   └── 2_ground_truth/
+│   ├── results_v1/
+│   └── results_v2/
 ├── requirements.txt
 └── README.md
 ```
@@ -259,6 +263,14 @@ pytest tests/ -v
 ---
 
 ## Datasets
+
+The benchmark data is not stored directly in the repository. It can be downloaded from:
+
+https://drive.google.com/drive/folders/1vjWRgPVkmWCHlmVbrD2DNJWBDSP_qd1Z?usp=sharing
+
+The downloaded benchmark instances and their corresponding ground-truth annotations are expected to be placed in the `data/benchmark/` directory.
+
+The `data/datasets/` directory contains example scheduling problems manually created by the authors and represented directly in the L0 schema.
 
 See `docs/DATASETS.md` for details.
 
