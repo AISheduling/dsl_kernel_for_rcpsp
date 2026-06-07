@@ -23,7 +23,6 @@ import importlib.util
 import json
 import os
 import statistics
-import sys
 import tempfile
 import traceback
 from pathlib import Path

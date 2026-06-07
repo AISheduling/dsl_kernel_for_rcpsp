@@ -7,7 +7,6 @@ generate_gt.py — генерация Ground Truth файлов из сырых 
 """
 
 import argparse
-import json
 from pathlib import Path
 
 from parsers import parse_sm, parse_mm, parse_rcp, parse_msrcp

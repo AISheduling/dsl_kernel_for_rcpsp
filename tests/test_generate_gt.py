@@ -10,12 +10,7 @@ tests/test_generate_gt.py — тесты для generate_gt.py.
 """
 
 import json
-import os
-import tempfile
-from pathlib import Path
 from unittest.mock import patch, MagicMock
-
-import pytest
 
 from generate_gt import generate_gt
 
